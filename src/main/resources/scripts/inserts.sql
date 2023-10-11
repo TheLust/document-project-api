@@ -4,58 +4,20 @@ VALUES
     ('Operatore Cedacri'),
     ('Operatore Bancare');
 -----------------------------------------------------------------------------------------
-INSERT INTO document_type (code, name, description, is_macro, is_date_grouped)
+INSERT INTO document_type (code, name, description, macro_id, is_date_grouped)
 VALUES
-    ('RPSRV', 'Report di Servizio', 'Report sul servizio per periodo', true,true),
-    ('RPSLA', 'Report SLA', 'Report SLA per periodo',true,true),
-    ('RPPRG','Progettazione', 'Documentazione per progetti',true,false),
-    ('NETWK','Network', 'Network',false,false),
-    ('SICRZ','Sicurezza', 'Sicurezza',false,false),
-    ('CHNGE','Change', 'Change',false,false),
-    ('BCKUP','Backup', 'Backup',false,false),
-    ('ANLIS','Analisi', 'Analisi',false,false),
-    ('TRNSZ','Transizione', 'Transizione',false,false),
-    ('PRDZN','Produzione', 'Produzione',false,false),
-    ('TEST','Test', 'Test',false,false),
-    ('MNTRG','Monitoraggio', 'Monitoraggio',false,false);
------------------------------------------------------------------------------------------
-INSERT INTO document_type_hierarchy(macro_id, micro_id) VALUES
-                                       (
-                                           (SELECT id FROM document_type WHERE code = 'RPSRV'),
-                                           (SELECT id FROM document_type WHERE code = 'NETWK')
-                                       ),
-                                       (
-                                           (SELECT id FROM document_type WHERE code = 'RPSRV'),
-                                           (SELECT id FROM document_type WHERE code = 'SICRZ')
-                                       ),
-                                       (
-                                           (SELECT id FROM document_type WHERE code = 'RPSRV'),
-                                           (SELECT id FROM document_type WHERE code = 'CHNGE')
-                                       ),
-                                       (
-                                           (SELECT id FROM document_type WHERE code = 'RPSRV'),
-                                           (SELECT id FROM document_type WHERE code = 'BCKUP')
-                                       ),
-                                       (
-                                           (SELECT id FROM document_type WHERE code = 'RPPRG'),
-                                           (SELECT id FROM document_type WHERE code = 'ANLIS')
-                                       ),
-                                       (
-                                           (SELECT id FROM document_type WHERE code = 'RPPRG'),
-                                           (SELECT id FROM document_type WHERE code = 'TRNSZ')
-                                       ),
-                                       (
-                                           (SELECT id FROM document_type WHERE code = 'RPPRG'),
-                                           (SELECT id FROM document_type WHERE code = 'PRDZN')
-                                       ),
-                                       (
-                                           (SELECT id FROM document_type WHERE code = 'RPPRG'),
-                                           (SELECT id FROM document_type WHERE code = 'TEST')
-                                       ),
-                                       (
-                                           (SELECT id FROM document_type WHERE code = 'RPPRG'),
-                                           (SELECT id FROM document_type WHERE code = 'MNTRG')
-                                       );
+    ('RPSRV', 'Report di Servizio', 'Report sul servizio per periodo', null,true),
+    ('RPSLA', 'Report SLA', 'Report SLA per periodo',null,true),
+    ('RPPRG','Progettazione', 'Documentazione per progetti',null,false),
+    ('NETWK','Network', 'Network',1,false),
+    ('SICRZ','Sicurezza', 'Sicurezza',1,false),
+    ('CHNGE','Change', 'Change',1,false),
+    ('BCKUP','Backup', 'Backup',1,false),
+    ('ANLIS','Analisi', 'Analisi',3,false),
+    ('TRNSZ','Transizione', 'Transizione',3,false),
+    ('PRDZN','Produzione', 'Produzione',3,false),
+    ('TEST','Test', 'Test',3,false),
+    ('MNTRG','Monitoraggio', 'Monitoraggio',3,false);
 -------------------------------------------------------------------------------------------
 -- INSERT DEFAULT ADMIN !!! TO DISABLE ACCOUNT AFTER !!!
 -- DEFAULT Account - user: 'admin' password: 'Admin' WITHOUT '

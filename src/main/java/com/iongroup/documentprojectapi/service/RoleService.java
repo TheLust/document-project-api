@@ -3,12 +3,13 @@ package com.iongroup.documentprojectapi.service;
 import com.iongroup.documentprojectapi.entity.Role;
 import com.iongroup.documentprojectapi.exception.NotFoundException;
 import com.iongroup.documentprojectapi.repository.RoleRepository;
-import com.iongroup.documentprojectapi.util.Field;
+import com.iongroup.documentprojectapi.util.Entity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,8 +20,12 @@ public class RoleService {
     public Role findById(Long id) {
         return roleRepository.findById(id)
                 .orElseThrow(
-                        () -> NotFoundException.of(Field.ROLE)
+                        () -> NotFoundException.of(Entity.ROLE)
                 );
+    }
+
+    public Optional<Role> findByName(String name) {
+        return roleRepository.findByName(name);
     }
 
     public List<Role> findAll() {

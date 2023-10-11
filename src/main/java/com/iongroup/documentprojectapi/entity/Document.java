@@ -54,7 +54,7 @@ public class Document {
 
     @Column(columnDefinition = "text",
             nullable = false)
-    @Check(constraints = "name ~ '^[a-zA-Z0-9]+$'")
+    @Check(constraints = "name ~ '^[a-zA-Z0-9 ]+$'")
     private String additionalInformation;
 
     @Column(nullable = false)

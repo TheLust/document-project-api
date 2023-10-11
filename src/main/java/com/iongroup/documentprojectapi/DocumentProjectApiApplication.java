@@ -1,7 +1,9 @@
 package com.iongroup.documentprojectapi;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class DocumentProjectApiApplication {
@@ -10,4 +12,8 @@ public class DocumentProjectApiApplication {
 		SpringApplication.run(DocumentProjectApiApplication.class, args);
 	}
 
+	@Bean
+	public ModelMapper getModelMapper() {
+		return new ModelMapper();
+	}
 }

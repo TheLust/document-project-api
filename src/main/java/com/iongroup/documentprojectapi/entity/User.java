@@ -2,6 +2,7 @@ package com.iongroup.documentprojectapi.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,7 +29,7 @@ public class User {
     @ManyToOne
     private Institution institution;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "user")
@@ -44,7 +45,6 @@ public class User {
     private String username;
 
     @Column(nullable = false)
-    @Check(constraints = "password ~ '^[a-zA-Z0-9 ]+$'")
     private String password;
 
     @Column(nullable = false)

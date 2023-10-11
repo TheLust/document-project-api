@@ -2,9 +2,12 @@ package com.iongroup.documentprojectapi.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +27,12 @@ public class DocumentType {
     @OneToMany(mappedBy = "type")
     private List<Document> documents;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private DocumentType macro;
+
+    @OneToMany(mappedBy = "macro")
+    private List<DocumentType> micros;
+
     @Column(columnDefinition = "varchar(5)",
             nullable = false,
             unique = true)
@@ -35,9 +44,6 @@ public class DocumentType {
 
     @Column(columnDefinition = "text")
     private String description;
-
-    @Column(nullable = false)
-    private Boolean isMacro;
 
     @Column(nullable = false)
     private Boolean isDateGrouped;
