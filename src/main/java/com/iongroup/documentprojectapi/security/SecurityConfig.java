@@ -33,7 +33,6 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final RoleService roleService;
     private final AccountDetailsService accountDetailsService;
     private final JwtFilter jwtFilter;
 

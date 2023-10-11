@@ -17,6 +17,7 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
+@SuppressWarnings("NullableProblems")
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtils jwtUtil;

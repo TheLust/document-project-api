@@ -3,8 +3,6 @@ package com.iongroup.documentprojectapi.dto;
 import com.iongroup.documentprojectapi.annotation.Alphanumeric;
 import com.iongroup.documentprojectapi.util.ConstraintViolationMessage;
 import com.iongroup.documentprojectapi.util.Field;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

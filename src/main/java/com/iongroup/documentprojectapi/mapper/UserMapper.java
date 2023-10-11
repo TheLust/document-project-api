@@ -17,10 +17,6 @@ public class UserMapper {
         return mapper.map(registerRequest, User.class);
     }
 
-    public User toUser(UserDto userDto) {
-        return mapper.map(userDto, User.class);
-    }
-
     public UserDto toUserDto(User user) {
         return mapper.map(user, UserDto.class);
     }

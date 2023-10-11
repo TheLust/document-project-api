@@ -4,7 +4,6 @@ public class Field {
 
     public static final String NAME = "Name";
     public static final String SURNAME = "Surname";
-    public static final String PATRONYMIC = "Patronymic";
     public static final String CODE = "Code";
     public static final String USERNAME = "Username";
     public static final String PASSWORD = "Password";
@@ -14,7 +13,6 @@ public class Field {
     public static final String FINISH_DATE = "Finish date";
     public static final String ADDITIONAL_INFORMATION = "Additional information";
     public static final String ACTIVE = "Active";
-    public static final String MACRO = "Macro";
     public static final String DATE_GROUPED = "Date grouped";
     public static final String GROUPING_DATE = "Grouping date";
     public static final String PATH = "Path";

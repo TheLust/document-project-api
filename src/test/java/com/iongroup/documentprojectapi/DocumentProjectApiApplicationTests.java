@@ -17,24 +17,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 class DocumentProjectApiApplicationTests {
 
-	private final UserService userService;
-	private final RoleService roleService;
-
 	@Test
 	void contextLoads() {
-		User user = new User();
-		user.setPassword("admin");
-		user.setEmail("admin@admin.admin");
-		Set<Role> roles = new HashSet<>();
-		roles.add(roleService.findByName("Amministratore").get());
-		user.setRoles(roles);
-		user.setIsEnabled(true);
-		user.setName("Admin");
-		user.setSurname("Admin");
-		user.setPatronymic("Admin");
-		user.setUsername("admin2");
-
-		userService.save(user);
 	}
 
 }

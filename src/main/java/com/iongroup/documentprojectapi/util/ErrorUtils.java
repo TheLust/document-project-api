@@ -1,6 +1,5 @@
 package com.iongroup.documentprojectapi.util;
 
-import com.iongroup.documentprojectapi.entity.User;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 

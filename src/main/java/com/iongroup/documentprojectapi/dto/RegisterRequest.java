@@ -1,7 +1,6 @@
 package com.iongroup.documentprojectapi.dto;
 
 import com.iongroup.documentprojectapi.annotation.Alphanumeric;
-import com.iongroup.documentprojectapi.entity.Role;
 import com.iongroup.documentprojectapi.util.ConstraintViolationMessage;
 import com.iongroup.documentprojectapi.util.Field;
 import jakarta.validation.constraints.Email;
