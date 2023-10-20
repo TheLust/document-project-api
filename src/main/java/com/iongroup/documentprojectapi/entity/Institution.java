@@ -33,7 +33,8 @@ public class Institution {
     @Check(constraints = "code ~ '^[a-zA-Z0-9 ]+$'")
     private String code;
 
-    @Column(nullable = false)
+    @Column(nullable = false,
+            unique = true)
     @Check(constraints = "name ~ '^[a-zA-Z0-9 ]+$'")
     private String name;
 

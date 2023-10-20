@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
@@ -38,17 +39,26 @@ public class DocumentController {
         );
     }
 
-    @GetMapping("/download")
-    public ResponseEntity<Resource> download(@RequestParam("id") Long id) {
+    @GetMapping(value = "/my-institution")
+    public ResponseEntity<List<DocumentDto>> findAllForBankOperator(@AuthenticationPrincipal AccountDetails accountDetails) {
+        return  new ResponseEntity<>(
+                documentFacade.getAllForInstitution(accountDetails.getUser()),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<Resource> download(@RequestParam("id") Long id,
+                                             @AuthenticationPrincipal AccountDetails accountDetails) {
         return new ResponseEntity<>(
-                documentFacade.download(id),
+                documentFacade.download(id, accountDetails.getUser()),
                 HttpStatus.OK
         );
     }
 
     @PostMapping
     public ResponseEntity<DocumentDto> save(@RequestParam(value = "institution") Long institutionId,
-                                            @RequestParam(value = "project") Long projectId,
+                                            @RequestParam(value = "project", required = false) Long projectId,
                                             @RequestParam(value = "type") Long typeId,
                                             @RequestPart(value = "file") MultipartFile multipartFile,
                                             @AuthenticationPrincipal AccountDetails accountDetails,

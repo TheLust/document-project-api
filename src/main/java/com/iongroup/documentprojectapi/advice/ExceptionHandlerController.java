@@ -2,9 +2,11 @@ package com.iongroup.documentprojectapi.advice;
 
 import com.iongroup.documentprojectapi.exception.AlreadyExistsException;
 import com.iongroup.documentprojectapi.exception.FileSaveException;
+import com.iongroup.documentprojectapi.exception.NotAuthenticatedException;
 import com.iongroup.documentprojectapi.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -52,6 +54,22 @@ public class ExceptionHandlerController {
         return new ResponseEntity<>(
                 new ExceptionResponse(e.getMessage(), new Date().getTime()),
                 HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    private ResponseEntity<ExceptionResponse> handleException(AccessDeniedException e) {
+        return new ResponseEntity<>(
+                new ExceptionResponse(e.getMessage(), new Date().getTime()),
+                HttpStatus.FORBIDDEN
+        );
+    }
+
+    @ExceptionHandler(NotAuthenticatedException.class)
+    private ResponseEntity<ExceptionResponse> handleException(NotAuthenticatedException e) {
+        return new ResponseEntity<>(
+                new ExceptionResponse(e.getMessage(), new Date().getTime()),
+                HttpStatus.UNAUTHORIZED
         );
     }
 }

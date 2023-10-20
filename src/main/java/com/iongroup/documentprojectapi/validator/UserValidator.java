@@ -1,8 +1,10 @@
 package com.iongroup.documentprojectapi.validator;
 
+import com.iongroup.documentprojectapi.entity.Role;
 import com.iongroup.documentprojectapi.entity.User;
 import com.iongroup.documentprojectapi.exception.AlreadyExistsException;
 import com.iongroup.documentprojectapi.service.UserService;
+import com.iongroup.documentprojectapi.util.ConstraintViolationMessage;
 import com.iongroup.documentprojectapi.util.Entity;
 import com.iongroup.documentprojectapi.util.Field;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +36,14 @@ public class UserValidator implements Validator {
 
         if (user.getRoles().isEmpty()) {
             errors.rejectValue("roles", Entity.USER + " should have at least 1 " + Entity.ROLE.toLowerCase());
+        }
+
+        if (user.getRoles().stream().map(Role::getName).toList().contains("Operatore Bancare") && user.getInstitution() == null) {
+            errors.rejectValue("institution", Entity.INSTITUTION + ConstraintViolationMessage.NOT_NULL);
+        }
+
+        if (!user.getRoles().stream().map(Role::getName).toList().contains("Operatore Bancare") && user.getInstitution() != null) {
+            errors.rejectValue("institution", Entity.INSTITUTION + " must be null");
         }
     }
 

@@ -8,8 +8,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -49,6 +51,7 @@ public class SecurityConfig {
                                         "/v2/api-docs",
                                         "/v3/api-docs",
                                         "/v3/api-docs/**",
+                                        "/swagger",
                                         "/swagger-resources",
                                         "/swagger-resources/**",
                                         "/configuration/ui",
@@ -57,8 +60,38 @@ public class SecurityConfig {
                                         "webjars/**",
                                         "swagger-ui.html"
                                 ).permitAll()
-                                .requestMatchers("/api/v1/admin/**").hasRole("Amministratore")
-                                .anyRequest().hasAnyAuthority("Operatore Bancare", "Operatore Cedacri", "Amministratore")
+                                .requestMatchers(
+                                        HttpMethod.GET,
+                                        "/api/v1/institutions",
+                                        "/api/v1/users",
+                                        "/api/v1/roles"
+                                ).hasAuthority("Amministratore")
+                                .requestMatchers(
+                                        HttpMethod.POST,
+                                        "/api/v1/institutions",
+                                        "/api/v1/users"
+                                ).hasAuthority("Amministratore")
+                                .requestMatchers(
+                                        HttpMethod.PUT,
+                                        "/api/v1/users/able",
+                                        "/api/v1/users/change-password"
+                                ).hasAuthority("Amministratore")
+                                .requestMatchers(
+                                        HttpMethod.GET,
+                                        "/api/v1/projects",
+                                        "/api/v1/documents",
+                                        "/api/v1/types"
+                                ).hasAuthority("Operatore Cedacri")
+                                .requestMatchers(
+                                        HttpMethod.POST,
+                                        "/api/v1/projects",
+                                        "/api/v1/documents"
+                                ).hasAuthority("Operatore Cedacri")
+                                .requestMatchers(
+                                        HttpMethod.GET,
+                                        "/api/v1/documents/my-institution",
+                                        "/api/v1/documents/download"
+                                ).hasAuthority("Operatore Bancare")
                 )
                 .httpBasic(Customizer.withDefaults());
 
@@ -66,7 +99,7 @@ public class SecurityConfig {
             exception.authenticationEntryPoint((request, response, e) -> {
                 response.setContentType("application/json;charset=UTF-8");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Not authenticated");
+                response.getWriter().write("Not Authenticated");
             });
 
             exception.accessDeniedHandler((request, response, e) -> {

@@ -1,5 +1,6 @@
 package com.iongroup.documentprojectapi.facade;
 
+import com.iongroup.documentprojectapi.dto.PasswordChangeRequest;
 import com.iongroup.documentprojectapi.dto.RegisterRequest;
 import com.iongroup.documentprojectapi.dto.UserDto;
 import com.iongroup.documentprojectapi.entity.Institution;
@@ -47,9 +48,9 @@ public class UserFacade {
         User user = userMapper.toUser(registerRequest);
         user.setInstitution(institution);
         user.setRoles(
-                registerRequest.getRoleIds()
+                registerRequest.getRoles()
                         .stream()
-                        .map(roleService::findById)
+                        .map(roleDto -> roleService.findById(roleDto.getId()))
                         .collect(Collectors.toSet())
         );
 
@@ -76,9 +77,9 @@ public class UserFacade {
             newUser.setInstitution(oldUser.getInstitution());
         }
         newUser.setRoles(
-                registerRequest.getRoleIds()
+                registerRequest.getRoles()
                         .stream()
-                        .map(roleService::findById)
+                        .map(roleDto -> roleService.findById(roleDto.getId()))
                         .collect(Collectors.toSet())
         );
 
@@ -89,6 +90,32 @@ public class UserFacade {
 
         return userMapper.toUserDto(
                 userService.update(oldUser, newUser)
+        );
+    }
+
+    public UserDto able(Long id) {
+        User oldUser = userService.findById(id);
+
+        oldUser.setIsEnabled(!oldUser.getIsEnabled());
+
+        return userMapper.toUserDto(
+                userService.update(oldUser, oldUser)
+        );
+    }
+
+    public UserDto changePassword(Long id,
+                                  PasswordChangeRequest passwordChangeRequest,
+                                  BindingResult bindingResult) {
+        User oldUser = userService.findById(id);
+
+        oldUser.setPassword(passwordChangeRequest.getPassword());
+
+        if (bindingResult.hasErrors()) {
+            ErrorUtils.returnErrors(bindingResult);
+        }
+
+        return userMapper.toUserDto(
+                userService.update(oldUser, oldUser)
         );
     }
 

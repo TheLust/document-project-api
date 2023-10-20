@@ -47,8 +47,20 @@ public class DocumentFacade {
                 .toList();
     }
 
-    public Resource download(Long id) {
+    public List<DocumentDto> getAllForInstitution(User user) {
+        return documentService.findAllByInstitution(user.getInstitution())
+                .stream()
+                .map(documentMapper::toDocumentDto)
+                .toList();
+    }
+
+    public Resource download(Long id,
+                             User user) {
         Document document = documentService.findById(id);
+
+        if (!user.getInstitution().getId().equals(document.getInstitution().getId())) {
+            throw new RuntimeException("You dont have access to this institution files");
+        }
 
         return FileManager.getFile(document);
     }
@@ -62,7 +74,7 @@ public class DocumentFacade {
                             BindingResult bindingResult) {
         documentDto.setId(null);
         Institution institution = institutionService.findById(institutionId);
-        Project project = projectService.findById(projectId);
+        Project project = projectId != null ? projectService.findById(projectId) : null;
         DocumentType documentType = documentTypeService.findById(typeId);
 
         Document document = documentMapper.toDocument(documentDto);

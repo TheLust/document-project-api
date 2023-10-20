@@ -19,15 +19,18 @@ public class FileManager {
 
     public static String saveFile(Document document, MultipartFile multipartFile) {
         String institutionName = document.getInstitution().getName();
-        String projectName = document.getProject().getName();
         int year = document.getUploadDate().getYear();
         int month = document.getUploadDate().getMonthValue();
 
-        String filePath = institutionName + "/" +  projectName + "/" + year + "/" + month;
+        String filePath = institutionName  + "/" + year + "/" + month;
         String fileName = "/" + multipartFile.getOriginalFilename();
 
         try {
             Path fullPath = Paths.get(directory, filePath, fileName);
+            while (Files.exists(fullPath)) {
+                fileName = addIndexBeforeExtension(fileName);
+                fullPath = Paths.get(directory, filePath, fileName);
+            }
             Files.createDirectories(fullPath.getParent());
             multipartFile.transferTo(fullPath.toFile());
         } catch (IOException e) {
@@ -45,5 +48,10 @@ public class FileManager {
         } catch (Exception e) {
             throw NotFoundException.of("File");
         }
+    }
+
+    private static String addIndexBeforeExtension(String fileName) {
+        int lastDotIndex = fileName.lastIndexOf(".");
+        return fileName.substring(0, lastDotIndex) + "(1)" + fileName.substring(lastDotIndex);
     }
 }

@@ -28,6 +28,10 @@ public class InstitutionService {
         return institutionRepository.findByCode(code);
     }
 
+    public Optional<Institution> findByName(String name) {
+        return institutionRepository.findByName(name);
+    }
+
     public List<Institution> findAll() {
         return institutionRepository.findAll();
     }

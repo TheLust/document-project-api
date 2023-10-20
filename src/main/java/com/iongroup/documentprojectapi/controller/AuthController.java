@@ -1,6 +1,7 @@
 package com.iongroup.documentprojectapi.controller;
 
 import com.iongroup.documentprojectapi.dto.LoginRequest;
+import com.iongroup.documentprojectapi.dto.RoleDto;
 import com.iongroup.documentprojectapi.entity.Role;
 import com.iongroup.documentprojectapi.entity.User;
 import com.iongroup.documentprojectapi.exception.AuthenticationException;
@@ -20,9 +21,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -51,6 +54,14 @@ public class AuthController {
         } catch (BadCredentialsException e) {
             throw new AuthenticationException(AuthenticationException.BAD_CREDENTIALS);
         }
+    }
+
+    @GetMapping("/token/roles")
+    public ResponseEntity<List<String>> getRolesFromToken(@RequestParam("token") String token) {
+        return new ResponseEntity<>(
+                jwtUtils.extractRolesFromToken(token),
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/init")

@@ -25,7 +25,6 @@ public class DocumentDto {
     private ProjectDto project;
 
     @NotBlank(message = Field.NAME + ConstraintViolationMessage.NOT_BLANK)
-    @Alphanumeric(message = Field.NAME + ConstraintViolationMessage.ALPHANUMERIC)
     private String name;
 
     private String path;

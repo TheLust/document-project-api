@@ -36,13 +36,11 @@ public class Document {
     @ManyToOne
     private DocumentType type;
 
-    @NotNull
     @ManyToOne
     private Project project;
 
     @Column(columnDefinition = "varchar(260)",
             nullable = false)
-    @Check(constraints = "name ~ '^[a-zA-Z0-9 ]+$'")
     private String name;
 
     @Column(nullable = false)
@@ -54,7 +52,7 @@ public class Document {
 
     @Column(columnDefinition = "text",
             nullable = false)
-    @Check(constraints = "name ~ '^[a-zA-Z0-9 ]+$'")
+    @Check(constraints = "additional_information ~ '^[a-zA-Z0-9 ]+$'")
     private String additionalInformation;
 
     @Column(nullable = false)

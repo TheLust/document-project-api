@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class JwtUtils {
@@ -51,12 +52,12 @@ public class JwtUtils {
     }
 
     @SneakyThrows
-    public String extractRoleFromToken(String jwtToken) {
+    public List<String> extractRolesFromToken(String jwtToken) {
         return JWT.require(Algorithm.HMAC256(secret))
                 .build()
                 .verify(jwtToken)
                 .getClaim(ROLE_FIELD)
-                .asString();
+                .asList(String.class);
     }
 
     @SneakyThrows

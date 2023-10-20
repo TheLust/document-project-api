@@ -1,5 +1,6 @@
 package com.iongroup.documentprojectapi.controller;
 
+import com.iongroup.documentprojectapi.dto.PasswordChangeRequest;
 import com.iongroup.documentprojectapi.dto.RegisterRequest;
 import com.iongroup.documentprojectapi.dto.UserDto;
 import com.iongroup.documentprojectapi.facade.UserFacade;
@@ -51,6 +52,24 @@ public class UserController {
                                           BindingResult bindingResult) {
         return new ResponseEntity<>(
                 userFacade.update(id, institutionId, registerRequest, bindingResult),
+                HttpStatus.OK
+        );
+    }
+
+    @PutMapping("/able")
+    public ResponseEntity<UserDto> able(@RequestParam("id") Long id) {
+        return new ResponseEntity<>(
+                userFacade.able(id),
+                HttpStatus.OK
+        );
+    }
+
+    @PutMapping("/change-password")
+    public ResponseEntity<UserDto> changePassword(@RequestParam("id") Long id,
+                                                  @RequestBody @Valid PasswordChangeRequest passwordChangeRequest,
+                                                  BindingResult bindingResult) {
+        return new ResponseEntity<>(
+                userFacade.changePassword(id, passwordChangeRequest, bindingResult),
                 HttpStatus.OK
         );
     }

@@ -1,6 +1,7 @@
 package com.iongroup.documentprojectapi.service;
 
 import com.iongroup.documentprojectapi.entity.Document;
+import com.iongroup.documentprojectapi.entity.Institution;
 import com.iongroup.documentprojectapi.exception.NotFoundException;
 import com.iongroup.documentprojectapi.repository.DocumentRepository;
 import com.iongroup.documentprojectapi.util.Entity;
@@ -30,6 +31,10 @@ public class DocumentService {
 
     public List<Document> findAll() {
         return documentRepository.findAll();
+    }
+
+    public List<Document> findAllByInstitution(Institution institution) {
+        return documentRepository.findAllByInstitution(institution);
     }
 
     public Document save(Document document) {

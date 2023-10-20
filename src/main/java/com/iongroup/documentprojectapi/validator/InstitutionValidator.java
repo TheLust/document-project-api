@@ -31,14 +31,23 @@ public class InstitutionValidator implements Validator {
         if (institutionService.findByCode(institution.getCode()).isPresent()) {
             errors.rejectValue("code", AlreadyExistsException.getMessage(Entity.INSTITUTION, Field.CODE));
         }
+
+        if (institutionService.findByName(institution.getName()).isPresent()) {
+            errors.rejectValue("code", AlreadyExistsException.getMessage(Entity.INSTITUTION, Field.NAME));
+        }
     }
 
     public void validate(Long id, Object target, Errors errors) {
         Institution institution = (Institution) target;
         Optional<Institution> foundInstitution = institutionService.findByCode(institution.getCode());
+        Optional<Institution> foundInstitutionByName = institutionService.findByName(institution.getName());
 
         if (foundInstitution.isPresent() && !foundInstitution.get().getId().equals(id)) {
             errors.rejectValue("code", AlreadyExistsException.getMessage(Entity.INSTITUTION, Field.CODE));
+        }
+
+        if (foundInstitutionByName.isPresent() && !foundInstitutionByName.get().getId().equals(id)) {
+            errors.rejectValue("code", AlreadyExistsException.getMessage(Entity.INSTITUTION, Field.NAME));
         }
     }
 }

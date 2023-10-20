@@ -5,6 +5,7 @@ import com.iongroup.documentprojectapi.util.ConstraintViolationMessage;
 import com.iongroup.documentprojectapi.util.Field;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -20,7 +21,8 @@ public class RegisterRequest {
 
     private InstitutionDto institution;
 
-    private Set<Long> roleIds;
+    @NotEmpty(message = Field.ROLES + ConstraintViolationMessage.NOT_EMPTY)
+    private Set<RoleDto> roles;
 
     @NotBlank(message = Field.USERNAME + ConstraintViolationMessage.NOT_BLANK)
     @Size(

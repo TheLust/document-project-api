@@ -41,6 +41,7 @@ public class UserService {
     }
 
     public User update(User oldUser, User newUser) {
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         BeanUtils.copyProperties(newUser, oldUser, "id");
         return userRepository.save(oldUser);
     }

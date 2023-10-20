@@ -16,4 +16,5 @@ public class Field {
     public static final String DATE_GROUPED = "Date grouped";
     public static final String GROUPING_DATE = "Grouping date";
     public static final String PATH = "Path";
+    public static final String ROLES = "Roles";
 }
