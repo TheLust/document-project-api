@@ -47,6 +47,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(
                                         "/api/v1/auth/**",
+                                        "/api/v1/personal/**",
                                         "/api/v1/images/**",
                                         "/v2/api-docs",
                                         "/v3/api-docs",
@@ -61,37 +62,10 @@ public class SecurityConfig {
                                         "swagger-ui.html"
                                 ).permitAll()
                                 .requestMatchers(
-                                        HttpMethod.GET,
-                                        "/api/v1/institutions",
-                                        "/api/v1/users",
-                                        "/api/v1/roles"
+                                        "/api/v1/users/**",
+                                        "/api/v1/roles/**",
+                                        "/api/v1/institutions/**"
                                 ).hasAuthority("Amministratore")
-                                .requestMatchers(
-                                        HttpMethod.POST,
-                                        "/api/v1/institutions",
-                                        "/api/v1/users"
-                                ).hasAuthority("Amministratore")
-                                .requestMatchers(
-                                        HttpMethod.PUT,
-                                        "/api/v1/users/able",
-                                        "/api/v1/users/change-password"
-                                ).hasAuthority("Amministratore")
-                                .requestMatchers(
-                                        HttpMethod.GET,
-                                        "/api/v1/projects",
-                                        "/api/v1/documents",
-                                        "/api/v1/types"
-                                ).hasAuthority("Operatore Cedacri")
-                                .requestMatchers(
-                                        HttpMethod.POST,
-                                        "/api/v1/projects",
-                                        "/api/v1/documents"
-                                ).hasAuthority("Operatore Cedacri")
-                                .requestMatchers(
-                                        HttpMethod.GET,
-                                        "/api/v1/documents/my-institution",
-                                        "/api/v1/documents/download"
-                                ).hasAuthority("Operatore Bancare")
                 )
                 .httpBasic(Customizer.withDefaults());
 

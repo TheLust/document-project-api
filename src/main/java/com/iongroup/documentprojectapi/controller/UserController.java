@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> save(@RequestParam("institution") Long institutionId,
+    public ResponseEntity<UserDto> save(@RequestParam(value = "institution", required = false) Long institutionId,
                                         @RequestBody @Valid RegisterRequest registerRequest,
                                         BindingResult bindingResult) {
         return new ResponseEntity<>(

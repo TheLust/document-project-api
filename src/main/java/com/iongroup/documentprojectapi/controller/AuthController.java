@@ -1,10 +1,13 @@
 package com.iongroup.documentprojectapi.controller;
 
 import com.iongroup.documentprojectapi.dto.LoginRequest;
+import com.iongroup.documentprojectapi.dto.RegisterRequest;
 import com.iongroup.documentprojectapi.dto.RoleDto;
+import com.iongroup.documentprojectapi.dto.UserDto;
 import com.iongroup.documentprojectapi.entity.Role;
 import com.iongroup.documentprojectapi.entity.User;
 import com.iongroup.documentprojectapi.exception.AuthenticationException;
+import com.iongroup.documentprojectapi.facade.UserFacade;
 import com.iongroup.documentprojectapi.security.AccountDetails;
 import com.iongroup.documentprojectapi.security.JwtUtils;
 import com.iongroup.documentprojectapi.service.RoleService;
@@ -17,6 +20,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +37,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class AuthController {
 
+    private final UserFacade userFacade;
     private final RoleService roleService;
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
@@ -54,6 +59,15 @@ public class AuthController {
         } catch (BadCredentialsException e) {
             throw new AuthenticationException(AuthenticationException.BAD_CREDENTIALS);
         }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<UserDto> register(@RequestBody @Valid RegisterRequest registerRequest,
+                                            BindingResult bindingResult) {
+        return new ResponseEntity<>(
+                userFacade.save(2L, registerRequest, bindingResult),
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/token/roles")

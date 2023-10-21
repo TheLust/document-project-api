@@ -43,10 +43,12 @@ public class UserFacade {
     public UserDto save(Long institutionId,
                         @Valid RegisterRequest registerRequest,
                         BindingResult bindingResult) {
-        Institution institution = institutionService.findById(institutionId);
-
         User user = userMapper.toUser(registerRequest);
-        user.setInstitution(institution);
+
+        if (institutionId != null) {
+            Institution institution = institutionService.findById(institutionId);
+            user.setInstitution(institution);
+        }
         user.setRoles(
                 registerRequest.getRoles()
                         .stream()
@@ -123,6 +125,10 @@ public class UserFacade {
         User user = userService.findById(id);
         userService.delete(id);
 
+        return userMapper.toUserDto(user);
+    }
+
+    public UserDto personalFind(User user) {
         return userMapper.toUserDto(user);
     }
 }
